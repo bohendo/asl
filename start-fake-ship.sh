@@ -3,7 +3,7 @@
 name="${1:-zod}"
 root=$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )
 data="$root/data"
-fresh="fresh"
+fresh="fresh-$name"
 reset="${2:-"false"}" # or "true" to reset all persistent data to fresh state
 ames_port="$((8000 + RANDOM % 1000))"
 http_port="$((8000 + RANDOM % 1000))"
@@ -61,7 +61,7 @@ else
   echo
   sleep 3 # give the user a sec to read the message above
   pill="dev-latest.pill"
-  if [[ ! -f "pill" ]]
+  if [[ ! -f "$pill" ]]
   then
     echo "Downloading $pill"
     wget https://storage.googleapis.com/media.urbit.org/developers/dev-latest.pill
