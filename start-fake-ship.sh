@@ -5,8 +5,6 @@ root=$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )
 data="$root/data"
 fresh="fresh-$name"
 reset="${2:-"false"}" # or "true" to reset all persistent data to fresh state
-ames_port="$((8000 + RANDOM % 1000))"
-http_port="$((8000 + RANDOM % 1000))"
 
 if [[ "$1" == "--reset" ]]
 then reset="true"
@@ -46,7 +44,7 @@ then
     rm -rfv "$name"
     cp -r "$fresh" "$name"
   fi
-  $urbit --ames-port="$ames_port" --http-port="$http_port" "$name"
+  $urbit "$name"
 else
   echo
   echo "No data found at $(realpath $fresh)"
@@ -54,7 +52,6 @@ else
   echo "Once this ship boots, run the following commands to pre-configure the fresh data dir"
   echo "~$name:dojo> |mount %base" # generic boilerplate (like what you get after `git init`)
   echo "~$name:dojo> |mount %garden" # this desk serves landscape so the server I guess?
-  echo "~$name:dojo> |mount %landscape" # landscape gui I think
   echo "~$name:dojo> |mount %webterm" # in-browser dojo terminal app
   echo "~$name:dojo> |exit"
   echo "Then, re-run this script to start a fresh $name ship from the generated fresh"
